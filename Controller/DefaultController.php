@@ -46,10 +46,8 @@ class DefaultController extends AbstractController
         $product = $this->findProductById($productId);
         $cart = $this->getCart($cartId);
 
-        try{
             $this->container->get('vespolina.cart_manager')->addItemToCart($cart, $product);
             $this->finishCart($cart);
-        }catch(\Exception $e) {}    //Dirty temporary hack
 
         return new RedirectResponse($this->container->get('router')->generate('vespolina_cart_show', array('cartId' => $cartId)));
     }
@@ -59,11 +57,8 @@ class DefaultController extends AbstractController
         $cart = $this->getCart($cartId);
         $product = $this->findProductById($productId);
 
-        try{
             $this->container->get('vespolina.cart_manager')->removeItemFromCart($cart, $product);
             $this->finishCart($cart);
-
-        }catch(\Exception $e) {}    //Dirty temporary hack
 
         return new RedirectResponse($this->container->get('router')->generate('vespolina_cart_show', array('cartId' => $cartId)));
     }
